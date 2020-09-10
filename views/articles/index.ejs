@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Software in Practice | Through the eyes of a software engineer</title>
+</head>
+<%- include('./../partials/_header') %>
+<body>
+    <div class="container">
+        <p class="text-body">
+            How does software engineering look in <strong>practice</strong>?</p>
+            <p>Well... let's talk <strong>software in practice</strong> through practice of software!</p>
+        </p>
+        <a href="/articles/new" class="btn btn-success">New Article</a>
+
+        <% articles.forEach(article => { %>
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h4 class="card-title"><%= article.title %></h4>
+                    <div class="card-subtitle text-muted mb-2"><%= article.createdAt.toLocaleDateString() %></div>
+                    <div class="card-text mb-2"><%= article.description %></div>
+                    <a href="articles/<%= article.slug %>" class="btn btn-primary">Read More</a>
+                    <a href="/articles/edit/<%= article.id %>" class="btn btn-info">Edit</a>
+                    <form action="/articles/<%= article.id %>?_method=DELETE" method="POST" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</body>
+<%- include('./../partials/_footer') %>
+</html>
