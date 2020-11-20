@@ -16,5 +16,8 @@
   ],
   "author": "J. Pretorius",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/jangabrielpretorius/cppengineer.com#readme"
+  "homepage": "http://cppengineer.com",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
