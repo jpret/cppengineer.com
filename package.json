@@ -1,0 +1,20 @@
+{
+  "name": "cppengineer",
+  "version": "1.0.0",
+  "description": "Cpp Engineer Website",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://jangabrielpretorius@bitbucket.org/jangabrielpretorius/cppengineer.com.git"
+  },
+  "keywords": [
+    "c-plus-plus"
+  ],
+  "author": "J. Pretorius",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/jangabrielpretorius/cppengineer.com#readme"
+}
