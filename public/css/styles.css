@@ -2,5 +2,6 @@
 .container{
     margin: auto;
     text-align: center;
-    padding: 100px;
+    padding: 5px;
+    padding-top: 100px;
 }
