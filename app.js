@@ -62,6 +62,6 @@ app.use(express.static('public'));
 
 // Start server
 app.listen(
-    PORT,
+    PORT,'localhost',
     console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
 );
