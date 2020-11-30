@@ -58,7 +58,7 @@ app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 
 // Static folder files
-app.use(express.static('public'));
+app.use(express.static('assets'));
 
 // Start server
 app.listen(

@@ -2,11 +2,34 @@
 const express = require('express');
 const router = express.Router();
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
+const Post = require('./../models/Post');
+var moment = require('moment');
 
 // @desc    Static landing page
 // @route   GET /
 router.get('/', (req, res) => {
-  res.render('index')
+  const posts = [{
+    title: "Hello World Post!",
+    section: "Software",
+    brief: "This is the hello world post's brief",
+    body: "This is the test post for the index page!",
+    imagePath: "/1.0/img/cpp.png",
+    status: "private",
+    createdAt: Date.now()
+  },
+  {
+    title: "This is a Second Post!",
+    section: "C++20",
+    brief: "This is the second post's brief",
+    body: "We're going places! Blah Blah Blah!",
+    imagePath: "/1.0/img/cpp.png",
+    status: "private",
+    createdAt: Date.now()
+  }];
+  res.render('index', {
+    posts: posts,
+    moment: moment
+  });
 });
 
 // Dashboard
