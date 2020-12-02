@@ -11,7 +11,10 @@ const Post = require('../models/Post');
 // @desc    Show add page
 // @route   GET /posts/add
 router.get('/add', ensureAuthenticated, (req, res) => {
-    res.render('posts/add');
+    res.render('posts/add', {
+        user: req.user,
+        page: "New Post"
+    });
 });
 
 // @desc    Process add a post
@@ -35,9 +38,11 @@ router.get('/', ensureAuthenticated, async (req, res) => {
             .populate('user')
             .sort({ createdAt: 'desc' })
             .lean()
-        console.log(posts);
         res.render('posts/index', {
-            posts
+            posts: posts,
+            user: req.user,
+            moment:moment,
+            page: "Public Posts"
         });
 
     } catch (error) {
@@ -58,7 +63,9 @@ router.get('/:id', ensureAuthenticated, async (req, res) => {
         }
         res.render('posts/show', {
             post: post,
-            moment: moment
+            moment: moment,
+            user: req.user,
+            page: "Post"
         });
     } catch (error) {
         console.log(error);

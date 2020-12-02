@@ -36,10 +36,23 @@ router.get('/', (req, res) => {
 });
 
 // Dashboard
-router.get('/dashboard', ensureAuthenticated, (req, res) =>
-  res.render('dashboard', {
-    user: req.user
-  })
-);
+router.get('/dashboard', ensureAuthenticated, async (req, res) => {
+  try {
+    const posts = await Post.find({ user: req.user.id })
+        .populate('user')
+        .sort({ createdAt: 'desc' })
+        .lean()
+    res.render('dashboard', {
+      user: req.user,
+      posts:posts,
+      moment:moment,
+      page: "Dashboard"
+    });
+
+} catch (error) {
+    console.error(error);
+    res.render('error/500');
+}
+});
 
 module.exports = router;

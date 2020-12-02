@@ -1,23 +1,16 @@
-<div class="row">
-    <div class="col s12 m8">
-        <h3><%= post.title %>
-            <small><%= post.user.name %></small>
-        </h3>
-        <div class="card story">
-            <div class="card-content">
-                <span class="card-title"><%= moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a') %></span>
+<%- include('./../partials/_user_header_nav.ejs') %>
+<div class="container">
+    <div class="row">
+        <div class="col s12 m8">
+            <h3><%= post.title %></h3>
+            <small>
+                <%= post.user.name %>,
+                <span><%= moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a') %></span>
+            </small>
+            <div class="p-4 container">
                 <%= post.body %>
             </div>
-        </div>
-    </div>
-    <div class="col s12 m4">
-        <div class="card center-align">
-            <div class="card-content">
-                <span class="card-title"><%= post.user.name %></span>
-            </div>
-            <div class="card-action">
-                <a href="/stories/user/<%= post.user._id %>">More From <%= post.user.name %></a>
-            </div>
+            <a href="/stories/user/<%= post.user._id %>">More From <%= post.user.name %></a>
         </div>
     </div>
 </div>

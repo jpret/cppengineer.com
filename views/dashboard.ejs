@@ -1,5 +1,47 @@
-<h1 class="mt-4">Dashboard</h1>
-<p class="lead mb-3">Welcome <%= user.name %></p>
-<a href="/posts/add" class="btn btn-primary">Add Post</a>
-<a href="/posts" class="btn btn-secondary">View Posts</a>
-<a href="/users/logout" class="btn btn-secondary">Logout</a>
+<div class="container">
+    <%- include('./partials/_user_header_nav.ejs') %>
+
+    <div class="container">
+        <p>Here are your posts:</p>
+
+    </div>
+    <% if (posts) { %>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% posts.forEach(function(post){ %>
+                <tr>
+                    <td><a href="/posts/<%=post._id%>"><%=post.title%></a></td>
+                    <td><span class="card-title"><%= moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a') %></span>
+                    </td>
+                    <td><span class="dash-status"><%= post.status %></span></td>
+                    <td>
+                        <a href="/posts/edit/<%= post._id %>" class="btn btn-float">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <form action="/posts/<%= post._id %>" method="POST" id="delete-form">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn red">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+    <!--div table-responsive-->
+
+    <% } else { %>
+    <p>You have not created any posts.</p>
+    <% }; %>
+</div>
