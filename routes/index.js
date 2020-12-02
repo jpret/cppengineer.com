@@ -1,9 +1,12 @@
 
+// Imports - Libraries
 const express = require('express');
 const router = express.Router();
-const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
-const Post = require('./../models/Post');
 var moment = require('moment');
+// Imports - Middleware
+const { ensureAuthenticated, forwardAuthenticated } = require('../middleware/auth');
+// Imports - Models
+const Post = require('./../models/Post');
 
 // @desc    Static landing page
 // @route   GET /

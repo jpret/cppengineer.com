@@ -4,7 +4,6 @@ const dotenv = require('dotenv');
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
-const connectDB = require('./config/db');
 const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session');
@@ -16,17 +15,20 @@ const PORT = process.env.PORT || 3000;
 // Create express app
 const app = express();
 
-// Passport Config
-require('./config/passport')(passport);
+// Passport config
+require('./middleware/passport')(passport);
 
-//Connect DB
+// Import Middleware
+const connectDB = require('./middleware/db');
+
+// Connect DB
 connectDB();
 
-// EJS
+// Set view engine - EJS
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 
-// Bodyparser
+// Enable Bodyparser
 app.use(express.urlencoded({ extended: false }))
 
 // Express session
@@ -56,6 +58,7 @@ app.use(function(req, res, next) {
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
+app.use('/posts', require('./routes/posts'));
 
 // Static folder files
 app.use(express.static('assets'));

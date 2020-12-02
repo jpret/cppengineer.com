@@ -1,19 +1,33 @@
+
+// Import - Libraries
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
-// Load User model
+
+// Import - Middleware
+const { forwardAuthenticated } = require('../middleware/auth');
+const { checkEnvironmentAccess } = require('../middleware/access');
+
+// Import - Models
 const User = require('../models/User');
-const { forwardAuthenticated } = require('../config/auth');
 
-// Login Page
-router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
+// @desc    User Login page
+// @route   GET /users/login
+router.get('/login', forwardAuthenticated, (req, res) => {
+  res.render('login')
+});
 
-// Register Page
-router.get('/register', forwardAuthenticated, (req, res) => res.render('register'));
+// @desc    User Register page
+// @route   GET /users/login
+router.get('/register',
+  checkEnvironmentAccess,
+  forwardAuthenticated, (req, res) => {
+    res.render('register')
+  });
 
 // Register
-router.post('/register', (req, res) => {
+router.post('/register', checkEnvironmentAccess, (req, res) => {
   const { name, email, password, password2 } = req.body;
   let errors = [];
 
