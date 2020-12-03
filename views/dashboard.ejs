@@ -1,0 +1,50 @@
+<div class="container">
+    <%- include('./partials/_user_header_nav.ejs') %>
+    <%- include ("./partials/_alert_messages") %>
+
+    <% if (posts.length > 0) { %>
+    <div class="table-responsive mt-4">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Topic</th>
+                    <th>Created Date</th>
+                    <th>Last Edited</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% posts.forEach(function(post){ %>
+                <tr>
+                    <td><a href="/posts/<%=post._id%>"><%=post.title%></a></td>
+                    <td><%=post.topic%></td>
+                    <td><span class="card-title"><%= moment(post.createdAt).format('DD MMM YYYY, HH:mm:ss') %></span></td>
+                    <td><span class="card-title"><%= moment(post.editedAt).format('DD MMM YYYY, HH:mm:ss') %></span>
+                    <td><span class="dash-status"><%= post.status %></span></td>
+                    <td>
+                        <a href="/posts/edit/<%= post._id %>" class="btn btn-float">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <form action="/posts/<%= post._id %>" method="POST" id="delete-form">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn red">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+    <!--div table-responsive-->
+    <% } else { %>
+    <p>You have not created any posts.</p>
+    <% }; %>
+    <div class="container clearfix">
+        <a href="/posts/add" class="btn btn-primary px-4 ml-2 float-right">New Post</a>
+    </div>
+    
+</div>

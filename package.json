@@ -1,32 +1,45 @@
 {
-  "name": "portfolio",
+  "name": "cppengineer",
   "version": "1.0.0",
-  "description": "This README would normally document whatever steps are necessary to get your application up and running.",
+  "description": "Cpp Engineer Website",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "devStart": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
+=======
+    "start": "cross-env NODE_ENV=production node app",
+    "dev": "cross-env NODE_ENV=development nodemon app"
+>>>>>>> feature/login
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/jangabrielpretorius/blog.git"
+    "url": "git+https://jangabrielpretorius@bitbucket.org/jangabrielpretorius/cppengineer.com.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "c-plus-plus"
+  ],
+  "author": "J. Pretorius",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/jangabrielpretorius/blog#readme",
+  "homepage": "http://cppengineer.com",
   "dependencies": {
-    "dompurify": "^2.0.15",
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^3.2.0",
+    "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
-    "jsdom": "^16.4.0",
-    "marked": "^1.1.1",
+    "express-ejs-layouts": "^2.5.0",
+    "express-session": "^1.17.1",
     "method-override": "^3.0.0",
-    "mongoose": "^5.10.4",
-    "slugify": "^1.4.5"
+    "moment": "^2.29.1",
+    "mongoose": "^5.10.15",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "cross-env": "^7.0.2",
+    "nodemon": "^2.0.6"
   }
 }
