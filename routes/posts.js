@@ -27,15 +27,17 @@ router.post('/', ensureAuthenticated, async (req, res) => {
         res.redirect('/dashboard');
     } catch (error) {
         console.log(error);
-        res.render('error/500');
+        res.render('error/500', {
+            redirect:"/dashboard"
+        });
     }
 });
 
-// @desc    Show all public posts
+// @desc    Show all public / member posts
 // @route   GET /posts
 router.get('/', ensureAuthenticated, async (req, res) => {
     try {
-        const posts = await Post.find({ status: 'public' })
+        const posts = await Post.find({ status:  { "$in": ["public", "member"] } })
             .populate('user')
             .sort({ createdAt: 'desc' })
             .lean()
@@ -43,13 +45,15 @@ router.get('/', ensureAuthenticated, async (req, res) => {
             posts: posts,
             user: req.user,
             moment: moment,
-            page: "Public Posts",
+            page: "Public & Member Posts",
             helper: require('../helpers/helper')
         });
 
     } catch (error) {
         console.error(error);
-        res.render('error/500');
+        res.render('error/500', {
+            redirect:"/dashboard"
+        });
     }
 });
 
@@ -61,7 +65,8 @@ router.get('/:id', ensureAuthenticated, async (req, res) => {
             .populate('user')
             .lean();
         if (!post) {
-            return res.render('error/404');
+            return res.render('error/404', {
+                redirect:"/dashboard"});
         }
         res.render('posts/show', {
             post: post,
@@ -71,7 +76,9 @@ router.get('/:id', ensureAuthenticated, async (req, res) => {
         });
     } catch (error) {
         console.log(error);
-        res.render('error/404');
+        res.render('error/404', {
+            redirect:"/dashboard"
+        });
     }
 });
 
@@ -85,7 +92,9 @@ router.get('/edit/:id', ensureAuthenticated, async (req, res) => {
         }).lean();
 
         if (!post) {
-            return res.render('error/404');
+            return res.render('error/404', {
+                redirect:"/dashboard"
+            });
         }
 
         if (post.user != req.user.id) {
@@ -100,7 +109,9 @@ router.get('/edit/:id', ensureAuthenticated, async (req, res) => {
         }
     } catch (error) {
         console.error(error);
-        res.render('error/500');
+        res.render('error/500', {
+            redirect:"/dashboard"
+        });
     }
 });
 
@@ -112,7 +123,9 @@ router.put('/:id', ensureAuthenticated, async (req, res) => {
         let post = await Post.findById(req.params.id).lean()
 
         if (!post) {
-            return res.render('error/404')
+            return res.render('error/404', {
+                redirect:"/dashboard"
+            })
         }
 
         if (post.user != req.user.id) {
@@ -131,7 +144,9 @@ router.put('/:id', ensureAuthenticated, async (req, res) => {
         }
     } catch (error) {
         console.error(error);
-        res.render('error/500');
+        res.render('error/500', {
+            redirect:"/dashboard"
+        });
     }
 });
 
@@ -144,7 +159,9 @@ router.delete('/:id', ensureAuthenticated, async (req, res) => {
         let post = await Post.findById(req.params.id).lean()
 
         if (!post) {
-            return res.render('error/404')
+            return res.render('error/404', {
+                redirect:"/dashboard"
+            })
         }
 
         if (post.user != req.user.id) {
@@ -157,7 +174,9 @@ router.delete('/:id', ensureAuthenticated, async (req, res) => {
         }
     } catch (error) {
         console.error(error);
-        res.render('error/500');
+        res.render('error/500', {
+            redirect:"/dashboard"
+        });
     }
 });
 
@@ -182,7 +201,9 @@ router.get('/user/:userId', ensureAuthenticated, async (req, res) => {
         })
     } catch (err) {
         console.error(err)
-        res.render('error/500')
+        res.render('error/500', {
+            redirect:"/dashboard"
+        })
     }
 })
 

@@ -8,34 +8,20 @@ const { ensureAuthenticated, forwardAuthenticated } = require('../middleware/aut
 // Imports - Models
 const Post = require('./../models/Post');
 
-// @desc    Static landing page
+// @desc    Landing page
 // @route   GET /
 router.get('/', (req, res) => {
-  const posts = [{
-    title: "Hello World Post!",
-    section: "Software",
-    brief: "This is the hello world post's brief",
-    body: "This is the test post for the index page!",
-    imagePath: "/1.0/img/cpp.png",
-    status: "private",
-    createdAt: Date.now()
-  },
-  {
-    title: "This is a Second Post!",
-    section: "C++20",
-    brief: "This is the second post's brief",
-    body: "We're going places! Blah Blah Blah!",
-    imagePath: "/1.0/img/cpp.png",
-    status: "private",
-    createdAt: Date.now()
-  }];
-  res.render('index', {
-    posts: posts,
-    moment: moment
-  });
+    res.render('index');
 });
 
-// Dashboard
+// @desc    About page
+// @route   GET /about
+router.get('/about', (req, res) => {
+    res.render('about');
+});
+
+// @desc    Member dashboard page
+// @route   GET /about
 router.get('/dashboard', ensureAuthenticated, async (req, res) => {
   try {
     const posts = await Post.find({ user: req.user.id })
@@ -51,8 +37,62 @@ router.get('/dashboard', ensureAuthenticated, async (req, res) => {
 
 } catch (error) {
     console.error(error);
-    res.render('error/500');
+    res.render('error/500', {
+        redirect:"/"
+    });
 }
+});
+
+// @desc    Blogs index page
+// @route   GET /blog
+router.get('/blog', async (req, res) => {
+    try {
+        const posts = await Post.find({ status: 'public' })
+            .populate('user')
+            .sort({ createdAt: 'desc' })
+            .lean()
+        res.render('blog/index', {
+            posts: posts,
+            moment: moment,
+            helper: require('../helpers/helper')
+        });
+  
+    } catch (error) {
+        console.error(error);
+        res.render('error/500', {
+          redirect:"/"
+      });
+    }
+  });
+
+// @desc    Get single published post
+// @route   GET /blog/:id
+router.get('/blog/:id', async (req, res) => {
+    try {
+        let post = await Post.findById(req.params.id)
+            .populate('user')
+            .lean();
+        if (!post) {
+            return res.render('error/404', {
+                redirect:"/"
+            });
+        }
+        if (post.status != 'public') {
+            return res.render('error/404', {
+                redirect:"/"
+            });
+        }
+        res.render('blog/post', {
+            post: post,
+            moment: moment,
+            name: post.user.name
+        });
+    } catch (error) {
+        console.log(error);
+        res.render('error/404', {
+            redirect:"/"
+        });
+    }
 });
 
 module.exports = router;

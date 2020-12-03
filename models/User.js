@@ -5,9 +5,18 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    displayName: {
+        type: String,
+        required: false
+    },
     email: {
         type: String,
         required: true
+    },
+    type: {
+        type: String,
+        default: 'user',
+        enum:['user','admin']
     },
     password: {
         type: String,

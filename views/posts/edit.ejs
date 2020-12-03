@@ -19,6 +19,7 @@
                 <label for="status">Status</label>
                 <select class="form-control" id="status" name="status">
                     <option value="private" <%= post.status == 'private' ? 'selected' : '' %>>Private</option>
+                    <option value="member" <%= post.status == 'member' ? 'selected' : '' %>>Member</option>
                     <option value="public" <%= post.status == 'public' ? 'selected' : '' %>>Public</option>
                 </select>
             </div>

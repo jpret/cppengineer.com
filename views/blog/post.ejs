@@ -1,0 +1,21 @@
+<%- include('./../partials/_header_nav.ejs') %>
+<div class="container">
+    <div class="row">
+        <div class="col s12 m8">
+            <h3><%= post.title %></h3>
+            <small class="text-muted">
+                <span><%= moment(post.createdAt).format('DD MMMM YYYY, HH:mm:ss') %></span>, <%= post.user.name %>
+            </small>
+            <div class="p-2 container">
+                <%- post.body %>
+            </div>
+            <div class="container mb-4">
+                <div class="row">
+                  <div class="col text-center">
+                    <a href="/" class="btn btn-secondary px-4 ml-2">Go Back</a>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>

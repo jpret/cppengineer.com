@@ -20,8 +20,8 @@ const PostSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        default: 'public',
-        enum:['public','private']
+        default: 'private',
+        enum:['public','member','private']
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
