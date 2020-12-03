@@ -3,14 +3,16 @@
     <div class="row">
         <div class="col s12 m8">
             <h3><%= post.title %></h3>
-            <small>
-                <%= post.user.name %>,
-                <span><%= moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a') %></span>
+            <small class="text-muted">
+                <span><%= moment(post.createdAt).format('DD MMMM YYYY, HH:mm:ss') %></span>, <%= post.user.name %>
             </small>
             <div class="p-4 container">
-                <%= post.body %>
+                <%- post.body %>
             </div>
-            <a href="/posts/user/<%= post.user._id %>">More From <%= post.user.name %></a>
+            <div class="p-4 container clearfix">
+                <span class="text-muted">See more posts from <a href="/posts/user/<%= post.user._id %>"><%= post.user.name %></a></span>
+                <a href="/dashboard" class="btn btn-secondary px-4 ml-2 float-right">Back to dashboard</a>
+            </div>
         </div>
     </div>
 </div>

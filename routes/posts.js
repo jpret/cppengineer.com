@@ -23,6 +23,7 @@ router.post('/', ensureAuthenticated, async (req, res) => {
     try {
         req.body.user = req.user.id;
         await Post.create(req.body);
+        req.flash('success_msg', 'New Post created successfully!');
         res.redirect('/dashboard');
     } catch (error) {
         console.log(error);

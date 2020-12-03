@@ -1,16 +1,14 @@
 <div class="container">
     <%- include('./partials/_user_header_nav.ejs') %>
     <%- include ("./partials/_alert_messages") %>
-    <div class="container">
-        <p>Here are your posts:</p>
 
-    </div>
-    <% if (posts) { %>
-    <div class="table-responsive">
+    <% if (posts.length > 0) { %>
+    <div class="table-responsive mt-4">
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Title</th>
+                    <th>Topic</th>
                     <th>Created Date</th>
                     <th>Last Edited</th>
                     <th>Status</th>
@@ -21,8 +19,9 @@
                 <% posts.forEach(function(post){ %>
                 <tr>
                     <td><a href="/posts/<%=post._id%>"><%=post.title%></a></td>
-                    <td><span class="card-title"><%= moment(post.createdAt).format('DD MMM YYYY, hh:mm:ss') %></span></td>
-                    <td><span class="card-title"><%= moment(post.editedAt).format('DD MMM YYYY, hh:mm:ss') %></span>
+                    <td><%=post.topic%></td>
+                    <td><span class="card-title"><%= moment(post.createdAt).format('DD MMM YYYY, HH:mm:ss') %></span></td>
+                    <td><span class="card-title"><%= moment(post.editedAt).format('DD MMM YYYY, HH:mm:ss') %></span>
                     <td><span class="dash-status"><%= post.status %></span></td>
                     <td>
                         <a href="/posts/edit/<%= post._id %>" class="btn btn-float">

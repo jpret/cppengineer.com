@@ -8,7 +8,7 @@
           <strong class="d-inline-block mb-2 text-primary"><%= post.topic %></strong>
           <h3 class="mb-0"><%= post.title %></h3>
           <div class="mb-1 text-muted"><%= moment(post.createdAt).format( 'MMM-DD-YYYY') %><span class="font-weight-light"> by <%= post.user.name %></span></div>
-          <p class="card-text mb-auto"><%= helper.truncate(helper.stripTags(post.body),150) %></p>
+          <p class="card-text mb-auto"><%= helper.truncate(helper.stripTags(post.body),100) %></p>
           <a href="/posts/<%= post._id %>" class="stretched-link">Continue reading</a>
         </div>
         <div class="col-auto d-none d-lg-block">
