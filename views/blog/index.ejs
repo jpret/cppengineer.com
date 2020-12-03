@@ -8,7 +8,7 @@
           <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-4 d-flex flex-column position-static">
               <strong class="d-inline-block mb-2 text-primary"><%= post.topic %></strong>
-              <h3 class="mb-0"><%= post.title %></h3>
+              <h4 class="mb-0"><%= post.title %></h4>
               <div class="mb-1 text-muted"><%= moment(post.createdAt).format( 'MMM-DD-YYYY') %><span class="font-weight-light"> by <%= post.user.name %></span></div>
               <p class="card-text mb-auto"><%= helper.truncate(helper.stripTags(post.body),100) %></p>
               <a href="/blog/<%= post._id %>" class="stretched-link">Continue reading</a>

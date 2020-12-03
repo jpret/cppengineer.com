@@ -28,7 +28,7 @@ router.post('/', ensureAuthenticated, async (req, res) => {
     } catch (error) {
         console.log(error);
         res.render('error/500', {
-            redirect:"/dashboard"
+            redirect: "/dashboard"
         });
     }
 });
@@ -37,7 +37,7 @@ router.post('/', ensureAuthenticated, async (req, res) => {
 // @route   GET /posts
 router.get('/', ensureAuthenticated, async (req, res) => {
     try {
-        const posts = await Post.find({ status:  { "$in": ["public", "member"] } })
+        const posts = await Post.find({ status: { "$in": ["public", "member"] } })
             .populate('user')
             .sort({ createdAt: 'desc' })
             .lean()
@@ -52,7 +52,7 @@ router.get('/', ensureAuthenticated, async (req, res) => {
     } catch (error) {
         console.error(error);
         res.render('error/500', {
-            redirect:"/dashboard"
+            redirect: "/dashboard"
         });
     }
 });
@@ -66,7 +66,8 @@ router.get('/:id', ensureAuthenticated, async (req, res) => {
             .lean();
         if (!post) {
             return res.render('error/404', {
-                redirect:"/dashboard"});
+                redirect: "/dashboard"
+            });
         }
         res.render('posts/show', {
             post: post,
@@ -77,7 +78,7 @@ router.get('/:id', ensureAuthenticated, async (req, res) => {
     } catch (error) {
         console.log(error);
         res.render('error/404', {
-            redirect:"/dashboard"
+            redirect: "/dashboard"
         });
     }
 });
@@ -93,7 +94,7 @@ router.get('/edit/:id', ensureAuthenticated, async (req, res) => {
 
         if (!post) {
             return res.render('error/404', {
-                redirect:"/dashboard"
+                redirect: "/dashboard"
             });
         }
 
@@ -110,13 +111,13 @@ router.get('/edit/:id', ensureAuthenticated, async (req, res) => {
     } catch (error) {
         console.error(error);
         res.render('error/500', {
-            redirect:"/dashboard"
+            redirect: "/dashboard"
         });
     }
 });
 
 // @desc    Update a post
-// @route   PUT /stories/:id
+// @route   PUT /posts/:id
 
 router.put('/:id', ensureAuthenticated, async (req, res) => {
     try {
@@ -124,7 +125,7 @@ router.put('/:id', ensureAuthenticated, async (req, res) => {
 
         if (!post) {
             return res.render('error/404', {
-                redirect:"/dashboard"
+                redirect: "/dashboard"
             })
         }
 
@@ -145,7 +146,7 @@ router.put('/:id', ensureAuthenticated, async (req, res) => {
     } catch (error) {
         console.error(error);
         res.render('error/500', {
-            redirect:"/dashboard"
+            redirect: "/dashboard"
         });
     }
 });
@@ -160,7 +161,7 @@ router.delete('/:id', ensureAuthenticated, async (req, res) => {
 
         if (!post) {
             return res.render('error/404', {
-                redirect:"/dashboard"
+                redirect: "/dashboard"
             })
         }
 
@@ -175,7 +176,7 @@ router.delete('/:id', ensureAuthenticated, async (req, res) => {
     } catch (error) {
         console.error(error);
         res.render('error/500', {
-            redirect:"/dashboard"
+            redirect: "/dashboard"
         });
     }
 });
@@ -186,23 +187,29 @@ router.get('/user/:userId', ensureAuthenticated, async (req, res) => {
     try {
         const posts = await Post.find({
             user: req.params.userId,
-            status: 'public',
+            status: { "$in": ["public", "member"] },
         })
             .populate('user')
             .sort({ createdAt: 'desc' })
             .lean()
 
+        if (!posts) {
+            res.render('error/404', {
+                redirect: "/dashboard"
+            })
+        }
+        const postUserName = posts[0].user.name;
         res.render('posts/index', {
             posts: posts,
             user: req.user,
             moment: moment,
-            page: `Public Posts: ${req.user.name}`,
+            page: `Public & Member Posts: ${postUserName}`,
             helper: require('../helpers/helper')
         })
     } catch (err) {
         console.error(err)
         res.render('error/500', {
-            redirect:"/dashboard"
+            redirect: "/dashboard"
         })
     }
 })
