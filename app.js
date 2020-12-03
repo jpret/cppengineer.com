@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session)
+const methodOverride = require('method-override');
 
 // Environment Constants
 dotenv.config({ path: './config/config.env' });
@@ -23,21 +25,34 @@ const connectDB = require('./middleware/db');
 
 // Connect DB
 connectDB();
-
+ 
 // Set view engine - EJS
 app.use(expressLayouts);
+app.set('layout', 'layouts/main.ejs');
 app.set('view engine', 'ejs');
+
 
 // Enable Bodyparser
 app.use(express.urlencoded({ extended: false }))
 
+// Method-override
+app.use(methodOverride(function (req, res) {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    // look in urlencoded POST bodies and delete it
+    let method = req.body._method
+    delete req.body._method
+    return method
+  }
+}))
+
 // Express session
 app.use(
     session({
-      secret: 'my super secret',
+      secret: 'my super secret for CppEngineer',
       resave: true,
-      saveUninitialized: true
-    })
+      saveUninitialized: true,
+      store: new MongoStore({ mongooseConnection: mongoose.connection })
+    }) 
   );
 
 // Passport middleware

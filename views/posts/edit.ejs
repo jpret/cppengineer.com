@@ -1,0 +1,37 @@
+<%- include('./../partials/_user_header_nav.ejs') %>
+<div class="container">
+    <h3>Edit Post</h3>
+    <div class="row">
+        <form action="/posts/<%= post._id %>" method="POST" class="col s12">
+            <input type="hidden" name="_method" value="PUT">
+            <div class="row">
+                <div class="input-field">
+                    <input type="text" id="title" name="title" value="<%= post.title %>">
+                    <label for="title">Title</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field">
+                    <select name="status" id="status">
+                        <option value="public" <%= post.status == 'public' ? 'selected' : '' %>>Public</option>
+                        <option value="private" <%= post.status == 'private' ? 'selected' : '' %>>Private</option>
+                    </select>
+                    <label for="status">Status</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field">
+                    <h5>Edit your post:</h5>
+                    <textarea name="body" id="body" cols="30" rows="10"><%= post.body %></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <input type="submit" value="Save" class="btn">
+                <a href="/dashboard" class="btn orange">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

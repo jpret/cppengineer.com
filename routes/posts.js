@@ -30,7 +30,7 @@ router.post('/', ensureAuthenticated, async (req, res) => {
     }
 });
 
-// @desc    Show all posts
+// @desc    Show all public posts
 // @route   GET /posts
 router.get('/', ensureAuthenticated, async (req, res) => {
     try {
@@ -41,8 +41,9 @@ router.get('/', ensureAuthenticated, async (req, res) => {
         res.render('posts/index', {
             posts: posts,
             user: req.user,
-            moment:moment,
-            page: "Public Posts"
+            moment: moment,
+            page: "Public Posts",
+            helper: require('../helpers/helper')
         });
 
     } catch (error) {
@@ -73,24 +74,27 @@ router.get('/:id', ensureAuthenticated, async (req, res) => {
     }
 });
 
-// @desc    Show all stories
-// @route   GET /stories/edit/:id
+// @desc    Edit a post
+// @route   GET /posts/edit/:id
 
 router.get('/edit/:id', ensureAuthenticated, async (req, res) => {
     try {
-        const story = await Story.findOne({
+        const post = await Post.findOne({
             _id: req.params.id
         }).lean();
 
-        if (!story) {
+        if (!post) {
             return res.render('error/404');
         }
 
-        if (story.user != req.user.id) {
-            res.redirect('/stories');
+        if (post.user != req.user.id) {
+            req.flash('error_msg', 'Sorry cannot edit that post, because you are not the owner of that post!');
+            res.redirect('/dashboard');
         } else {
-            res.render('stories/edit', {
-                story
+            res.render('posts/edit', {
+                post,
+                page: "Edit Post",
+                user: req.user,
             })
         }
     } catch (error) {
@@ -99,26 +103,29 @@ router.get('/edit/:id', ensureAuthenticated, async (req, res) => {
     }
 });
 
-// @desc    Update story
+// @desc    Update a post
 // @route   PUT /stories/:id
 
 router.put('/:id', ensureAuthenticated, async (req, res) => {
     try {
-        let story = await Story.findById(req.params.id).lean()
+        let post = await Post.findById(req.params.id).lean()
 
-        if (!story) {
+        if (!post) {
             return res.render('error/404')
         }
 
-        if (story.user != req.user.id) {
-            res.redirect('/stories');
+        if (post.user != req.user.id) {
+            req.flash('error_msg', 'Sorry cannot edit that post, because you are not the owner of that post!');
+            res.redirect('/dashboard');
         } else {
-            story = await Story.findOneAndUpdate({
+            req.body.editedAt = Date.now();
+            post = await Post.findOneAndUpdate({
                 _id: req.params.id
             }, req.body, {
                 new: true,
                 runValidators: true
             })
+            req.flash('success_msg', 'Post updated successfully!');
             res.redirect('/dashboard');
         }
     } catch (error) {
@@ -127,24 +134,37 @@ router.put('/:id', ensureAuthenticated, async (req, res) => {
     }
 });
 
-// @desc    Delete story
-// @route   DELETE /stories/:id
+// @desc    Delete post
+// @route   DELETE /posts/:id
 
 router.delete('/:id', ensureAuthenticated, async (req, res) => {
     try {
-        await Story.remove({ _id: req.params.id })
-        res.redirect('/dashboard')
+
+        let post = await Post.findById(req.params.id).lean()
+
+        if (!post) {
+            return res.render('error/404')
+        }
+
+        if (post.user != req.user.id) {
+            req.flash('error_msg', 'Sorry cannot edit that post, because you are not the owner of that post!');
+            res.redirect('/dashboard');
+        } else {
+            await Post.remove({ _id: req.params.id })
+            req.flash('success_msg', 'Post removed successfully!');
+            res.redirect('/dashboard')
+        }
     } catch (error) {
         console.error(error);
         res.render('error/500');
     }
 });
 
-// @desc    User stories
-// @route   GET /stories/user/:userId
+// @desc    User posts
+// @route   GET /posts/user/:userId
 router.get('/user/:userId', ensureAuthenticated, async (req, res) => {
     try {
-        const stories = await Story.find({
+        const posts = await Post.find({
             user: req.params.userId,
             status: 'public',
         })
@@ -152,8 +172,12 @@ router.get('/user/:userId', ensureAuthenticated, async (req, res) => {
             .sort({ createdAt: 'desc' })
             .lean()
 
-        res.render('stories/index', {
-            stories,
+        res.render('posts/index', {
+            posts: posts,
+            user: req.user,
+            moment: moment,
+            page: `Public Posts: ${req.user.name}`,
+            helper: require('../helpers/helper')
         })
     } catch (err) {
         console.error(err)

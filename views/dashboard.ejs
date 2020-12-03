@@ -1,6 +1,6 @@
 <div class="container">
     <%- include('./partials/_user_header_nav.ejs') %>
-
+    <%- include ("./partials/_alert_messages") %>
     <div class="container">
         <p>Here are your posts:</p>
 
@@ -11,7 +11,8 @@
             <thead>
                 <tr>
                     <th>Title</th>
-                    <th>Date</th>
+                    <th>Created Date</th>
+                    <th>Last Edited</th>
                     <th>Status</th>
                     <th></th>
                 </tr>
@@ -20,8 +21,8 @@
                 <% posts.forEach(function(post){ %>
                 <tr>
                     <td><a href="/posts/<%=post._id%>"><%=post.title%></a></td>
-                    <td><span class="card-title"><%= moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a') %></span>
-                    </td>
+                    <td><span class="card-title"><%= moment(post.createdAt).format('DD MMM YYYY, hh:mm:ss') %></span></td>
+                    <td><span class="card-title"><%= moment(post.editedAt).format('DD MMM YYYY, hh:mm:ss') %></span>
                     <td><span class="dash-status"><%= post.status %></span></td>
                     <td>
                         <a href="/posts/edit/<%= post._id %>" class="btn btn-float">

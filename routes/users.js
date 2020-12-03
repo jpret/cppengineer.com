@@ -98,7 +98,7 @@ router.post('/login', (req, res, next) => {
     failureFlash: true
   })(req, res, next);
 });
-
+ 
 // Logout
 router.get('/logout', (req, res) => {
   req.logout();

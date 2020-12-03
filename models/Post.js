@@ -10,7 +10,11 @@ const PostSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    imagePath: {
+    topic: {
+        type: String,
+        required: true
+    },
+    thumbnail: {
         type: String,
         required: false
     },
