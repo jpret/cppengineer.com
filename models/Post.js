@@ -21,7 +21,7 @@ const PostSchema = new mongoose.Schema({
     status: {
         type: String,
         default: 'private',
-        enum:['public','member','private']
+        enum:['public','protected','private']
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,

@@ -13,7 +13,7 @@ const Post = require('../models/Post');
 router.get('/add', ensureAuthenticated, (req, res) => {
     res.render('posts/add', {
         user: req.user,
-        page: "New Post"
+        layout: 'layouts/main_user'
     });
 });
 
@@ -45,7 +45,7 @@ router.get('/', ensureAuthenticated, async (req, res) => {
             posts: posts,
             user: req.user,
             moment: moment,
-            page: "Public & Member Posts",
+            layout: 'layouts/main_user',
             helper: require('../helpers/helper')
         });
 
@@ -73,7 +73,7 @@ router.get('/:id', ensureAuthenticated, async (req, res) => {
             post: post,
             moment: moment,
             user: req.user,
-            page: "Post"
+            layout: 'layouts/main_user'
         });
     } catch (error) {
         console.log(error);
@@ -104,7 +104,7 @@ router.get('/edit/:id', ensureAuthenticated, async (req, res) => {
         } else {
             res.render('posts/edit', {
                 post,
-                page: "Edit Post",
+                layout: 'layouts/main_user',
                 user: req.user,
             })
         }
@@ -203,7 +203,7 @@ router.get('/user/:userId', ensureAuthenticated, async (req, res) => {
             posts: posts,
             user: req.user,
             moment: moment,
-            page: `Public & Member Posts: ${postUserName}`,
+            layout: 'layouts/main_user',
             helper: require('../helpers/helper')
         })
     } catch (err) {

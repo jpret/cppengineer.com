@@ -1,35 +1,46 @@
-<%- include('./../partials/_user_header_nav.ejs') %>
-<div class="container pb-4">
-    <div class="container">
-        <h3>Add New Post</h3>
+<div class="container">
+    <div class="row">
+        <div class="col mt-4 mb-2">
+            <h4>Add New Post</h4>
+        </div>
     </div>
-    <form action="/posts" method="POST" class="col s12">
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" name="title" required>
-        </div>
-        <div class="form-group">
-            <label for="topic">Topic</label>
-            <input type="text" class="form-control" id="topic" name="topic" required>
-        </div>
-        <div class="form-group">
-            <label for="status">Status</label>
-            <select class="form-control" id="status" name="status">
-                <option value="private" selected>Private</option>
-                <option value="member" selected>Member</option>
-                <option value="public">Public</option>
-            </select>
-        </div>
 
-        <div class="form-group">
-            <label for="body">Post Content</label>
-            <textarea class="form-control" name="body" id="body" rows="10" required></textarea>
+    <div class="row">
+        <div class="col mt-2">
+            <%- include ("./../partials/_alert_messages") %>
         </div>
+    </div>
 
-        <div class="container clearfix ">
-            <a href="/dashboard" class="btn btn-secondary px-4 ml-2 float-right">Cancel</a>
-            <input type="submit" value="Create" class="btn btn-primary px-4 float-right">
+    <div class="row">
+        <div class="col mb-4">
+            <form action="/posts" method="POST">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="topic">Topic</label>
+                    <input type="text" class="form-control" id="topic" name="topic" required>
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select class="form-control" id="status" name="status">
+                        <option value="private" selected>Private</option>
+                        <option value="protected">Protected</option>
+                        <option value="public">Public</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="body">Post Content</label>
+                    <textarea class="form-control" name="body" id="body" rows="10" required></textarea>
+                </div>
+
+                <div class="container clearfix ">
+                    <a href="/dashboard" class="btn btn-secondary px-4 ml-2 float-right">Cancel</a>
+                    <input type="submit" value="Create" class="btn btn-primary px-4 float-right">
+                </div>
+            </form>
         </div>
-    </form>
-
+    </div>
 </div>

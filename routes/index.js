@@ -54,7 +54,7 @@ router.get('/dashboard', ensureAuthenticated, async (req, res) => {
       user: req.user,
       posts:posts,
       moment:moment,
-      page: "Dashboard"
+      layout: 'layouts/main_user'
     });
 
 } catch (error) {

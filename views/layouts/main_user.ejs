@@ -24,11 +24,13 @@
     <link rel="icon" href="/1.0/img/favicons/favicon.ico">
 </head>
 
-<body class="bg-light">
+<body>
+    <%- include('./../partials/_header_nav_user.ejs') %>
     <main role="main" class="container">
         <%- body %>
     </main>
-    
+    <%- include('./../partials/_footer.ejs') %>
+
     <!-- jQuery and JS bundle w/ Popper.js -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
