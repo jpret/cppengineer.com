@@ -21,8 +21,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="topic">Topic</label>
-                    <input type="text" class="form-control" id="topic" name="topic" value="<%= post.topic %>" required>
+                    <label for="tags">Tags <span class="text-muted">(semicolon-separated)</span></label>
+                    <input type="text" class="form-control" id="tags" name="tags" required value=<% if (post.tags.length > 0) { %>
+                        <% let str = ''; %>
+                        <% post.tags.forEach(function(tag, index, array){ %>
+                            <% str += tag; %>
+                            <%  if (index !== (array.length -1)) { str += ';' } %>
+                        <% }); %> 
+                        <%= str %>
+                    <% }; %>>
                 </div>
 
                 <div class="form-group">

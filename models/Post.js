@@ -10,22 +10,17 @@ const PostSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    topic: {
-        type: String,
-        required: true
-    },
-    thumbnail: {
-        type: String,
-        required: false
-    },
+    tags: [{
+        type: String
+    }],
     status: {
         type: String,
         default: 'private',
-        enum:['public','protected','private']
+        enum: ['public', 'protected', 'private']
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:'User'
+        ref: 'User'
     },
     createdAt: {
         type: Date,

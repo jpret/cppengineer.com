@@ -38,5 +38,15 @@ module.exports = {
                 return !RegExp(t).test(v) ? v : v.replace(t, t + ' selected="selected"')
             })
             .join('\n')
+    },
+    stringArrayToJsArray: function (str, separator) {
+        try {
+            let tags = str.replace(/\s/g, '');
+            var tagsArray = tags.split(separator);
+            return tagsArray;    
+        } catch (error) {
+            console.error("Cannot split tags: " + str + ", with error: " + error);
+        }
+        return [];
     }
 }

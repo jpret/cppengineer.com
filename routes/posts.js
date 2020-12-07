@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 var moment = require('moment');
+const helper = require('../helpers/helper');
 // Import middleware
 const { ensureAuthenticated, forwardAuthenticated } = require('../middleware/auth');
 // Import models
@@ -22,6 +23,7 @@ router.get('/add', ensureAuthenticated, (req, res) => {
 router.post('/', ensureAuthenticated, async (req, res) => {
     try {
         req.body.user = req.user.id;
+        req.body.tags = helper.stringArrayToJsArray(req.body.tags,";");
         await Post.create(req.body);
         req.flash('success_msg', 'New Post created successfully!');
         res.redirect('/dashboard');
@@ -134,6 +136,7 @@ router.put('/:id', ensureAuthenticated, async (req, res) => {
             res.redirect('/dashboard');
         } else {
             req.body.editedAt = Date.now();
+            req.body.tags = helper.stringArrayToJsArray(req.body.tags,";");
             post = await Post.findOneAndUpdate({
                 _id: req.params.id
             }, req.body, {
