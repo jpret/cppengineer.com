@@ -15,7 +15,7 @@ const User = require('../models/User');
 // @desc    User Login page
 // @route   GET /users/login
 router.get('/login', forwardAuthenticated, (req, res) => {
-  res.render('login')
+  res.render('login', { layout: 'layouts/lean' })
 });
 
 // @desc    User Register page
@@ -23,7 +23,7 @@ router.get('/login', forwardAuthenticated, (req, res) => {
 router.get('/register',
   checkEnvironmentAccess,
   forwardAuthenticated, (req, res) => {
-    res.render('register')
+    res.render('register', { layout: 'layouts/lean' })
   });
 
 // Register
@@ -49,7 +49,8 @@ router.post('/register', checkEnvironmentAccess, (req, res) => {
       name,
       email,
       password,
-      password2
+      password2,
+      layout: 'layouts/lean'
     });
   } else {
     User.findOne({ email: email }).then(user => {
@@ -60,7 +61,8 @@ router.post('/register', checkEnvironmentAccess, (req, res) => {
           name,
           email,
           password,
-          password2
+          password2,
+          layout: 'layouts/lean'
         });
       } else {
         const newUser = new User({
