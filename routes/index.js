@@ -10,6 +10,28 @@ const Post = require('./../models/Post');
 
 // @desc    Landing page
 // @route   GET /
+router.get('/', async (req, res) => {
+    try {
+        const posts = await Post.find({ status: 'public' })
+            .populate('user')
+            .sort({ createdAt: 'desc' })
+            .limit(5)
+            .lean()
+        res.render('index', {
+            posts: posts,
+            moment: moment,
+            helper: require('../helpers/helper')
+        });
+  
+    } catch (error) {
+        console.error(error);
+        res.render('error/404', {
+          redirect:"/"
+      });
+    }
+  });
+
+
 router.get('/', (req, res) => {
     res.render('index');
 });
