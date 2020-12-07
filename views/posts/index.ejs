@@ -17,7 +17,7 @@
           <h6 class="card-subtitle mb-2 text-muted"><%= moment(post.createdAt).format( 'DD-MM-YYYY') %><span
               class="font-weight-light"> by <%= post.user.name %></span></h6>
           <p class="card-text"><%= helper.truncate(helper.stripTags(post.body),350) %></p>
-          <a href="/blog/<%= post._id %>" class="btn btn-primary">Read more</a>
+          <a href="/posts/<%= post._id %>" class="btn btn-primary">Read more</a>
         </div>
       </div>
     </div>

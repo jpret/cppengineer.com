@@ -37,7 +37,7 @@ router.post('/', ensureAuthenticated, async (req, res) => {
 // @route   GET /posts
 router.get('/', ensureAuthenticated, async (req, res) => {
     try {
-        const posts = await Post.find({ status: { "$in": ["public", "member"] } })
+        const posts = await Post.find({ status: { "$in": ["public", "protected"] } })
             .populate('user')
             .sort({ createdAt: 'desc' })
             .lean()
@@ -187,7 +187,7 @@ router.get('/user/:userId', ensureAuthenticated, async (req, res) => {
     try {
         const posts = await Post.find({
             user: req.params.userId,
-            status: { "$in": ["public", "member"] },
+            status: { "$in": ["public", "protected"] },
         })
             .populate('user')
             .sort({ createdAt: 'desc' })
