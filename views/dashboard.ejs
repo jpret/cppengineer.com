@@ -3,11 +3,12 @@
     <div class="row">
         <div class="col mt-4 mb-2">
             <h4>Dashboard</h4>
+            <hr class="mt-4">
         </div>
     </div>
 
     <div class="row">
-        <div class="col mt-2">
+        <div class="col">
             <%- include ("./partials/_alert_messages") %>
         </div>
     </div>
@@ -34,7 +35,7 @@
                             <td>
                                 <% if (post.tags.length > 0) { %>
                                     <% post.tags.forEach(function(tag){ %>
-                                        <span class="badge badge-secondary"><%= tag %></span>
+                                        <span class="badge badge-info mt-0 mb-2 p-2"><%= tag %></span>
                                     <% }); %>
                                 <% }; %>
                             </td>

@@ -1,26 +1,13 @@
 <div class="container">
   <%- include ("./../partials/_alert_messages") %>
 
-  <div class="row pt-2 mt-4 mb-2">
-    <div class="col">
-      <h4>Blog Archive</h4>
+  <div class="row justify-content-md-center">
+    <div class="col-md-10 mt-4">
+      <h4>Blog Archive <% if (filter.length > 0) { %>
+        | <span class="text-muted"><%= filter %></span></h4>
+        <% }; %>
       <hr class="my-4">
     </div>
   </div>
-
-  <div class="row mb-2">
-    <% posts.forEach(function(post){ %>
-    <div class="col-md-6 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title"><%= post.title %></h5>
-          <h6 class="card-subtitle mb-2 text-muted"><%= moment(post.createdAt).format( 'DD-MM-YYYY') %><span
-              class="font-weight-light"> by <%= post.user.name %></span></h6>
-          <p class="card-text"><%= helper.truncate(helper.stripTags(post.body),350) %></p>
-          <a href="/blog/<%= post._id %>" class="btn btn-primary">Read more</a>
-        </div>
-      </div>
-    </div>
-
-    <% }); %>
+  <%- include ("./../partials/_blog_card_group") %>
   </div>

@@ -1,4 +1,5 @@
 const moment = require('moment')
+const showdown = require('showdown')
 
 module.exports = {
     formatDate: function (date, format) {
@@ -15,6 +16,8 @@ module.exports = {
         return str;
     },
     stripTags: function (input) {
+        var converter = new showdown.Converter();
+        input = converter.makeHtml(input);
         return input.replace(/<(?:.|\n)*?>/gm, '');
     },
     editIcon: function (storyUser, loggedUser, storyId, floating = true) {

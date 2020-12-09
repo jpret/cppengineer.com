@@ -1,14 +1,14 @@
 <div class="container">
   <%- include ("./partials/_alert_messages") %>
   <div class="row justify-content-center">
-    <div class="col text-center">
+    <div class="col-md-10 text-center">
       <img src="/1.0/img/profile-main.png" alt="" width="100%"></img>
       <img src="/1.0/img/welcome_message.gif" alt="" class=" mt-2 mb-2 rounded" width="100%"></img>
     </div>
   </div>
 
-  <div class="row mt-4">
-    <div class="col">
+  <div class="row justify-content-center mt-4">
+    <div class="col-md-10">
       <h4>C(++)rious about software</h4>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit felis nulla. Duis ornare consectetur
@@ -34,31 +34,15 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col">
+  <div class="row justify-content-md-center">
+    <div class="col-md-10">
+      <hr class="my-4">
       <h4>Latest posts</h4>
     </div>
   </div>
-
-  <div class="row mb-2 mt-4">
-    <% posts.forEach(function(post){ %>
-    <div class="col-md-6 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title"><%= post.title %></h5>
-          <h6 class="card-subtitle mb-2 text-muted"><%= moment(post.createdAt).format( 'DD-MM-YYYY') %><span
-              class="font-weight-light"> by <%= post.user.name %></span></h6>
-          <p class="card-text"><%= helper.truncate(helper.stripTags(post.body),350) %></p>
-          <a href="/blog/<%= post._id %>" class="btn btn-primary">Read more</a>
-        </div>
-      </div>
-    </div>
-
-    <% }); %>
-  </div>
-
-  <div class="row p-4 justify-content-center">
-    <div class="col text-center">
+  <%- include ("./partials/_blog_card_group") %>
+  <div class="row justify-content-center">
+    <div class="col-sm-auto text-center mb-4">
       <a href="/blog" class="btn btn-secondary">See more posts</a>
     </div>
   </div>

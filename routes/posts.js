@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 var moment = require('moment');
 const helper = require('../helpers/helper');
+const showdown = require('showdown');
 // Import middleware
 const { ensureAuthenticated, forwardAuthenticated } = require('../middleware/auth');
 // Import models
@@ -47,6 +48,8 @@ router.get('/', ensureAuthenticated, async (req, res) => {
             posts: posts,
             user: req.user,
             moment: moment,
+            filter: "",
+            basePath: "posts",
             layout: 'layouts/main_user',
             helper: require('../helpers/helper')
         });
@@ -71,10 +74,13 @@ router.get('/:id', ensureAuthenticated, async (req, res) => {
                 redirect: "/dashboard"
             });
         }
+        var converter = new showdown.Converter();
+        post.body = converter.makeHtml(post.body);
         res.render('posts/show', {
             post: post,
             moment: moment,
             user: req.user,
+            basePath: "posts",
             layout: 'layouts/main_user'
         });
     } catch (error) {
@@ -201,11 +207,13 @@ router.get('/user/:userId', ensureAuthenticated, async (req, res) => {
                 redirect: "/dashboard"
             })
         }
-        const postUserName = posts[0].user.name;
+        const userName = posts[0].user.name;
         res.render('posts/index', {
             posts: posts,
+            basePath: "posts",
             user: req.user,
             moment: moment,
+            filter: userName,
             layout: 'layouts/main_user',
             helper: require('../helpers/helper')
         })

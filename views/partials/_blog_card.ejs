@@ -1,0 +1,14 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title mb-2"><%= post.title %></h5>
+        <p class="card-text mb-1 mt-0"><small class="text-muted"><%= moment(post.createdAt).format( 'DD-MM-YYYY') %> by
+                <a href="/<%=  basePath %>/user/<%= post.user._id %>" class="text-decoration-none text-reset"><%= post.user.name %></a></small> ·
+            <% if (post.tags.length > 0) { %>
+            <% post.tags.forEach(function(tag){ %>
+            <span class="badge badge-info mt-0 mb-2 p-2"><%= tag %></span>
+            <% }); %>
+            <% }; %></p>
+        <p class="card-text"><%= helper.truncate(helper.stripTags(post.body),350) %></p>
+        <a href="/<%=  basePath %>/<%= post._id %>" class="btn btn-primary">Read more</a>
+    </div>
+</div>

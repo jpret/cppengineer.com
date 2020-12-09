@@ -5,14 +5,39 @@
 html {
   position: relative;
   min-height: 100%;
+  font-family: 'Open Sans Condensed', sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700);
+
+@import url(http://fonts.googleapis.com/css?family=Arimo:700,700italic);
+
+body {
+  color: #444;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Arimo, Helvetica, sans-serif;
 }
   
 body {
   margin-bottom: 70px; /* Margin bottom by footer height */
+}
+
+img,
+canvas,
+iframe,
+video,
+svg,
+select,
+textarea {
+  max-width: 100%;
 }
 
 /* Footer css */
@@ -33,5 +58,12 @@ div.card {
 /* Remove link color from a font-awesome link inside an <a> tag */
 .image-link {
   color: inherit;
+}
+
+blockquote {
+  border-left: 8px solid gray;
+  background-color: whitesmoke;
+  padding: 1rem;
+  border-radius: 5px;
 }
 

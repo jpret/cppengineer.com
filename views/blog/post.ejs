@@ -1,22 +1,51 @@
-<div class="container mt-4 mb-4">
+<div class="container">
   <%- include ("./../partials/_alert_messages") %>
-    <div class="row">
-        <div class="col-12">
-            <h3><%= post.title %></h3>
-            <small class="text-muted">
-                <span><%= moment(post.createdAt).format('DD MMMM YYYY, HH:mm:ss') %></span>, <%= post.user.name %>
-            </small>
-            <hr class="my-4">
-            <div class="container">
-                <%- post.body %>
-            </div>
-            <div class="container mb-4">
-                <div class="row">
-                  <div class="col text-center">
-                    <a href="/blog" class="btn btn-info px-4 ml-2">Go to Blog Archive</a>
-                  </div>
-                </div>
-              </div>
-        </div>
+  <div class="row justify-content-center">
+    <div class="col-md-10 mt-4 mb-2">
+      <h1 class="font-weight-bold py-2"><%= post.title %></h1>
+      <p class="text-uppercase pt-3">
+        <small>by <%= post.user.name %> | <span
+            class="text-muted"><%= moment(post.createdAt).format( 'DD MMM YYYY') %></span></small>
+      </p>
+      <p>
+        <% if (post.tags.length > 0) { %>
+        <% post.tags.forEach(function(tag){ %>
+        <span class="badge badge-info mr-1 p-2"><%= tag %></span>
+        <% }); %>
+        <% }; %>
+      </p>
     </div>
+  </div>
+  <!--row-post-header-->
+
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <hr class="my-4">
+    </div>
+  </div>
+  <!--row-hr-->
+
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="container text-justify">
+        <%- post.body %>
+      </div>
+    </div>
+  </div>
+  <!--row-post-body-->
+
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <hr class="my-4">
+    </div>
+  </div>
+  <!--row-hr-->
+
+  <div class="row justify-content-center">
+    <div class="col-sm-auto text-center mb-4">
+      <a href="/blog" class="btn btn-info px-4 ml-2">Go to Blog Archive</a>
+    </div>
+  </div>
+  <!--row-post-footer-->
 </div>
+<!--container-page-->
