@@ -3,10 +3,13 @@
 const express = require('express');
 const router = express.Router();
 var moment = require('moment');
+
 // Imports - Middleware
 const { ensureAuthenticated, forwardAuthenticated } = require('../middleware/auth');
+const { sendEmail } = require('../middleware/email');
 // Imports - Models
 const Post = require('./../models/Post');
+const ContactMessage = require('../models/ContactMessage');
 
 // @desc    Landing page
 // @route   GET /
@@ -36,6 +39,38 @@ router.get('/', async (req, res) => {
 // @route   GET /about
 router.get('/about', (req, res) => {
     res.render('about');
+});
+
+// @desc    Show Contact page
+// @route   GET /contact
+router.get('/contact', (req, res) => {
+    res.render('contact');
+});
+
+// @desc    Submit Contact Message
+// @route   POST /contact
+router.post('/contact', async (req, res) => {
+    try {
+        if (req.body.name.length > 100){
+            req.flash('error_msg', 'That name is too long...');
+            res.render("contact");
+        } else if (req.body.email.length > 100){
+            req.flash('error_msg', 'That email is too long...');
+            res.render("contact");
+        } else if (req.body.body.length > 3500){
+            req.flash('error_msg', 'That message is too long...');
+            res.render("contact");
+        }
+        const contactMessage = await ContactMessage.create(req.body);
+        sendEmail(contactMessage);
+        req.flash('success_msg', "Contact Message received successfully! I'll get back to you as soon as possible.");
+        res.redirect('/');
+    } catch (error) {
+        console.log(error);
+        res.render('error/500', {
+            redirect: "/"
+        });
+    }
 });
 
 // @desc    Member dashboard page

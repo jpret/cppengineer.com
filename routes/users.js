@@ -15,7 +15,7 @@ const User = require('../models/User');
 // @desc    User Login page
 // @route   GET /users/login
 router.get('/login', forwardAuthenticated, (req, res) => {
-  res.render('login', { layout: 'layouts/lean' })
+  res.render('users/login', { layout: 'layouts/lean' })
 });
 
 // @desc    User Register page
@@ -23,7 +23,7 @@ router.get('/login', forwardAuthenticated, (req, res) => {
 router.get('/register',
   checkEnvironmentAccess,
   forwardAuthenticated, (req, res) => {
-    res.render('register', { layout: 'layouts/lean' })
+    res.render('users/register', { layout: 'layouts/lean' })
   });
 
 // Register
@@ -44,7 +44,7 @@ router.post('/register', checkEnvironmentAccess, (req, res) => {
   }
 
   if (errors.length > 0) {
-    res.render('register', {
+    res.render('users/register', {
       errors,
       name,
       email,
@@ -56,7 +56,7 @@ router.post('/register', checkEnvironmentAccess, (req, res) => {
     User.findOne({ email: email }).then(user => {
       if (user) {
         errors.push({ msg: 'Email already exists' });
-        res.render('register', {
+        res.render('users/register', {
           errors,
           name,
           email,

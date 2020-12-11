@@ -3,9 +3,12 @@
   <div class="row justify-content-center">
     <div class="col-md-10 mt-4 mb-2">
       <h1 class="font-weight-bold py-2"><%= post.title %></h1>
-      <p class="text-uppercase pt-3">
-        <small>by <%= post.user.name %> | <span
-            class="text-muted"><%= moment(post.createdAt).format( 'DD MMM YYYY') %></span></small>
+      <p class="text-uppercase pt-3 mb-0">
+        by <%= post.user.name %> | <span
+            class="text-muted"><%= moment(post.createdAt).format( 'DD MMM YYYY') %></span>
+      </p>
+      <p>
+        <small><em>last edited: <span class="text-muted"><%= moment(post.editedAt).format( 'DD MMM YYYY') %></span></em></small>
       </p>
       <p>
         <% if (post.tags.length > 0) { %>

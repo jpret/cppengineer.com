@@ -24,68 +24,13 @@ router.get('/add', ensureAuthenticated, (req, res) => {
 router.post('/', ensureAuthenticated, async (req, res) => {
     try {
         req.body.user = req.user.id;
-        req.body.tags = helper.stringArrayToJsArray(req.body.tags,";");
+        req.body.tags = helper.stringArrayToJsArray(req.body.tags, ";");
         await Post.create(req.body);
         req.flash('success_msg', 'New Post created successfully!');
         res.redirect('/dashboard');
     } catch (error) {
         console.log(error);
         res.render('error/500', {
-            redirect: "/dashboard"
-        });
-    }
-});
-
-// @desc    Show all public / member posts
-// @route   GET /posts
-router.get('/', ensureAuthenticated, async (req, res) => {
-    try {
-        const posts = await Post.find({ status: { "$in": ["public", "protected"] } })
-            .populate('user')
-            .sort({ createdAt: 'desc' })
-            .lean()
-        res.render('posts/index', {
-            posts: posts,
-            user: req.user,
-            moment: moment,
-            filter: "",
-            basePath: "posts",
-            layout: 'layouts/main_user',
-            helper: require('../helpers/helper')
-        });
-
-    } catch (error) {
-        console.error(error);
-        res.render('error/500', {
-            redirect: "/dashboard"
-        });
-    }
-});
-
-// @desc    Get single post
-// @route   GET /posts/:id
-router.get('/:id', ensureAuthenticated, async (req, res) => {
-    try {
-        let post = await Post.findById(req.params.id)
-            .populate('user')
-            .lean();
-        if (!post) {
-            return res.render('error/404', {
-                redirect: "/dashboard"
-            });
-        }
-        var converter = new showdown.Converter();
-        post.body = converter.makeHtml(post.body);
-        res.render('posts/show', {
-            post: post,
-            moment: moment,
-            user: req.user,
-            basePath: "posts",
-            layout: 'layouts/main_user'
-        });
-    } catch (error) {
-        console.log(error);
-        res.render('error/404', {
             redirect: "/dashboard"
         });
     }
@@ -126,7 +71,6 @@ router.get('/edit/:id', ensureAuthenticated, async (req, res) => {
 
 // @desc    Update a post
 // @route   PUT /posts/:id
-
 router.put('/:id', ensureAuthenticated, async (req, res) => {
     try {
         let post = await Post.findById(req.params.id).lean()
@@ -142,7 +86,7 @@ router.put('/:id', ensureAuthenticated, async (req, res) => {
             res.redirect('/dashboard');
         } else {
             req.body.editedAt = Date.now();
-            req.body.tags = helper.stringArrayToJsArray(req.body.tags,";");
+            req.body.tags = helper.stringArrayToJsArray(req.body.tags, ";");
             post = await Post.findOneAndUpdate({
                 _id: req.params.id
             }, req.body, {
@@ -162,7 +106,6 @@ router.put('/:id', ensureAuthenticated, async (req, res) => {
 
 // @desc    Delete post
 // @route   DELETE /posts/:id
-
 router.delete('/:id', ensureAuthenticated, async (req, res) => {
     try {
 
@@ -178,7 +121,7 @@ router.delete('/:id', ensureAuthenticated, async (req, res) => {
             req.flash('error_msg', 'Sorry cannot edit that post, because you are not the owner of that post!');
             res.redirect('/dashboard');
         } else {
-            await Post.remove({ _id: req.params.id })
+            await Post.deleteOne({ _id: req.params.id })
             req.flash('success_msg', 'Post removed successfully!');
             res.redirect('/dashboard')
         }
@@ -223,6 +166,83 @@ router.get('/user/:userId', ensureAuthenticated, async (req, res) => {
             redirect: "/dashboard"
         })
     }
-})
+});
+
+// @desc    Get Json Backup of Posts
+// @route   GET /posts/backup
+router.get('/backup', ensureAuthenticated, async (req, res) => {   
+    try {
+        const posts = await Post.find({
+            user: req.user.id
+        }).sort({ createdAt: 'desc' }).lean();
+
+        if (!posts) {
+            res.render('error/404', {
+                redirect: "/dashboard"
+            })
+        }
+        res.status(200).send(posts);
+    } catch (err) {
+        console.error(err)
+        res.render('error/500', {
+            redirect: "/dashboard"
+        })
+    }
+});
+
+// @desc    Get single post
+// @route   GET /posts/:id
+router.get('/:id', ensureAuthenticated, async (req, res) => {
+    try {
+        let post = await Post.findById(req.params.id)
+            .populate('user')
+            .lean();
+        if (!post) {
+            return res.render('error/404', {
+                redirect: "/dashboard"
+            });
+        }
+        var converter = new showdown.Converter();
+        post.body = converter.makeHtml(post.body);
+        res.render('posts/show', {
+            post: post,
+            moment: moment,
+            user: req.user,
+            basePath: "posts",
+            layout: 'layouts/main_user'
+        });
+    } catch (error) {
+        console.log(error);
+        res.render('error/404', {
+            redirect: "/dashboard"
+        });
+    }
+});
+
+// @desc    Show all public / member posts
+// @route   GET /posts
+router.get('/', ensureAuthenticated, async (req, res) => {
+    try {
+        const posts = await Post.find({ status: { "$in": ["public", "protected"] } })
+            .populate('user')
+            .sort({ createdAt: 'desc' })
+            .lean()
+        res.render('posts/index', {
+            posts: posts,
+            user: req.user,
+            moment: moment,
+            filter: "",
+            basePath: "posts",
+            layout: 'layouts/main_user',
+            helper: require('../helpers/helper')
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.render('error/500', {
+            redirect: "/dashboard"
+        });
+    }
+});
 
 module.exports = router;

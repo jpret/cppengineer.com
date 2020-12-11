@@ -34,9 +34,9 @@
                             <td><a href="/posts/<%=post._id%>"><%=post.title%></a></td>
                             <td>
                                 <% if (post.tags.length > 0) { %>
-                                    <% post.tags.forEach(function(tag){ %>
-                                        <span class="badge badge-info mt-0 mb-2 p-2"><%= tag %></span>
-                                    <% }); %>
+                                <% post.tags.forEach(function(tag){ %>
+                                <span class="badge badge-info mt-0 mb-2 p-2"><%= tag %></span>
+                                <% }); %>
                                 <% }; %>
                             </td>
                             <td><span
@@ -66,11 +66,12 @@
             <p>You have not created any posts.</p>
             <% }; %>
             <div class="container clearfix">
-                <a href="/posts/add" class="btn btn-primary px-4 ml-2 float-right">New Post</a>
+                <a href="/posts/backup" class="btn btn-secondary px-4 ml-2 float-right"><i
+                        class="far fa-save mr-2"></i>Backup</a>
+                <a href="/posts/add" class="btn btn-primary px-4 ml-2 float-right"><i class="fas fa-plus mr-2"></i>New
+                    Post</a>
             </div>
         </div>
     </div>
-
-
 
 </div>
