@@ -1,6 +1,8 @@
 # environment variables
 config/config.env
 
+package-lock.json
+
 # Logs
 logs
 *.log
