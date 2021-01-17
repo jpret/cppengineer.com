@@ -1,0 +1,13 @@
+<div class="container">
+  <%- include ("./../partials/_alert_messages") %>
+
+  <div class="row justify-content-md-center">
+    <div class="col-md-10 mt-4">
+      <h4>Protected & Public Posts <% if (filter.length > 0) { %>
+        | <span class="text-muted"><%= filter %></span></h4>
+        <% }; %>
+      <hr class="my-4">
+    </div>
+  </div>
+
+  <%- include ("./../partials/_blog_card_group") %>

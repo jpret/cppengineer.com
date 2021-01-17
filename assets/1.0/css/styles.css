@@ -1,0 +1,69 @@
+/*
+  Custom styles: Cpp::Engineer
+*/
+
+html {
+  position: relative;
+  min-height: 100%;
+  font-family: 'Open Sans Condensed', sans-serif;
+}
+
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700);
+
+@import url(http://fonts.googleapis.com/css?family=Arimo:700,700italic);
+
+body {
+  color: #444;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Arimo, Helvetica, sans-serif;
+}
+  
+body {
+  margin-bottom: 70px; /* Margin bottom by footer height */
+}
+
+img,
+canvas,
+iframe,
+video,
+svg,
+select,
+textarea {
+  max-width: 100%;
+}
+
+/* Footer css */
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 70px; /* Set the fixed height of the footer here */
+  line-height: 70px; /* Vertically center the text there */
+  background-color: #f5f5f5;
+}
+
+/* Some custom card effects */
+div.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* Remove link color from a font-awesome link inside an <a> tag */
+.image-link {
+  color: inherit;
+}
+
+blockquote {
+  border-left: 8px solid gray;
+  background-color: whitesmoke;
+  padding: 1rem;
+  border-radius: 5px;
+}
+

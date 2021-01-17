@@ -1,0 +1,57 @@
+<div class="container">
+  <%- include ("./../partials/_alert_messages") %>
+  <div class="row justify-content-center">
+    <div class="col-md-10 mt-4 mb-2">
+      <h1 class="font-weight-bold py-2"><%= post.title %></h1>
+      <p class="text-uppercase pt-3 mb-0">
+        by <%= post.user.name %> | <span
+            class="text-muted"><%= moment(post.createdAt).format( 'DD MMM YYYY') %></span>
+      </p>
+      <p>
+        <small><em>last edited: <span class="text-muted"><%= moment(post.editedAt).format( 'DD MMM YYYY') %></span></em></small>
+      </p>
+      <p>
+        <% if (post.tags.length > 0) { %>
+        <% post.tags.forEach(function(tag){ %>
+        <span class="badge badge-info mr-1 p-2"><%= tag %></span>
+        <% }); %>
+        <% }; %>
+      </p>
+    </div>
+  </div>
+  <!--row-post-header-->
+
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <hr class="my-4">
+    </div>
+  </div>
+  <!--row-hr-->
+
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="container text-justify">
+        <%- post.body %>
+      </div>
+    </div>
+  </div>
+  <!--row-post-body-->
+
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <hr class="my-4">
+    </div>
+  </div>
+  <!--row-hr-->
+
+  <div class="row justify-content-center">
+    <div class="col-sm-auto text-center mb-4">
+      <a href="/dashboard" class="btn btn-info px-4 ml-2">Back to Dashboard</a>
+    </div>
+    <div class="col-sm-auto text-center mb-4">
+      <a href="/posts" class="btn btn-info px-4 ml-2">Back to Protected Posts</a>
+    </div>
+  </div>
+  <!--row-post-footer-->
+</div>
+<!--container-page-->
