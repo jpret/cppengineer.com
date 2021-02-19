@@ -1,32 +1,61 @@
 <div class="container">
   <%- include ("./partials/_alert_messages") %>
-  <div class="row justify-content-center">
-    <div class="col-md-10 text-center">
-      <img src="/1.0/img/profile-main.png" alt="" width="100%"></img>
-      <img src="/1.0/img/welcome_message.gif" alt="" class=" mt-2 mb-2 rounded" width="100%"></img>
+    <div class="row justify-content-center">
+      <div class="col-md-10 text-center">
+        <img src="/1.0/img/profile-main.png" alt="" width="100%"></img>
+        <img src="/1.0/img/welcome_message.gif" alt="" class=" mt-2 mb-2 rounded" width="100%"></img>
+      </div>
     </div>
-  </div>
 
-  <div class="row justify-content-center mt-4">
-    <div class="col-md-10">
-      <h4>C(++)rious about software?</h4>
-      <p>
-        Me too! I write <em>code</em>, and I like to write about <em>code</em>. Here you'll find content on various software languages,
-        tools and stuff that I enjoy using as a <em>software engineer</em>. Enjoy!
-      </p>
+    <div class="row justify-content-center mt-4">
+      <div class="col-md-10">
+        <h4>C(++)rious about software?</h4>
+        <p>
+          Me too! I write <em>code</em>, and I like to write about <em>code</em>. Here you'll find content on various
+          software languages,
+          tools and stuff that I enjoy using as a <em>software engineer</em>. Enjoy!
+        </p>
+      </div>
     </div>
-  </div>
 
-  <div class="row justify-content-md-center">
-    <div class="col-md-10">
-      <hr class="my-4">
-      <h4>Latest posts</h4>
+    <div class="row justify-content-center mt-4">
+      <div class="col-md-10">
+
+          <div class="row mb-2 mt-4 justify-content-md-center">
+              <div class="col-md-auto mb-4">
+                
+                  <img class="card-img-top" src="/1.0/img/github-2.jpg" alt="Card image cap">
+                  <div class="card-body text-center">
+                    <p class="card-text">Open Source Projects</p>
+                  </div>
+                
+              </div>
+
+              <div class="col-md-auto mb-4">
+                
+                  <img class="card-img-top" src="/1.0/img/github-gist.png" alt="Card image cap">
+                  <div class="card-body text-center">
+                    <p class="card-text">Code<br>Snippets</p>
+                  </div>
+                
+              </div>
+
+          </div>
+        </div>
+
+      
     </div>
-  </div>
-  <%- include ("./partials/_blog_card_group") %>
-  <div class="row justify-content-center">
-    <div class="col-sm-auto text-center mb-4">
-      <a href="/blog" class="btn btn-secondary">See more posts</a>
+
+    <div class="row justify-content-md-center">
+      <div class="col-md-10">
+        <hr class="my-4">
+        <h4>Latest posts</h4>
+      </div>
     </div>
-  </div>
+    <%- include ("./partials/_blog_card_group") %>
+      <div class="row justify-content-center">
+        <div class="col-sm-auto text-center mb-4">
+          <a href="/blog" class="btn btn-secondary">See more posts</a>
+        </div>
+      </div>
 </div>
