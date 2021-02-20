@@ -1,11 +1,13 @@
 const https = require('https');
 
-function doVerifyReCapthca (userResponse) {
+function doVerifyReCapthca(userResponse) {
     return new Promise((resolve, reject) => {
 
         var postData = "secret=" + `${process.env.GOOGLE_RECAPTCHA_SECRET_KEY}` + "&response=" + userResponse;
 
-        console.log ("Sending: " + postData);
+        if (process.env.NODE_ENV == "development") {
+            console.log("Sending: " + postData);
+        }
 
         var options = {
             hostname: 'www.google.com',
@@ -19,8 +21,10 @@ function doVerifyReCapthca (userResponse) {
         };
 
         var req = https.request(options, async (res) => {
-            console.log('statusCode:', res.statusCode);
-            console.log('headers:', res.headers);
+            if (process.env.NODE_ENV == "development") {
+                console.log('statusCode:', res.statusCode);
+                console.log('headers:', res.headers);
+            }
             let responseBody = '';
 
             res.on('data', (chunk) => {
@@ -28,7 +32,9 @@ function doVerifyReCapthca (userResponse) {
             });
 
             res.on('end', () => {
-                console.log(JSON.parse(responseBody))
+                if (process.env.NODE_ENV == "development") {
+                    console.log(JSON.parse(responseBody))
+                }
                 resolve(JSON.parse(responseBody));
             });
         });

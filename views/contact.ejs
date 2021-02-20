@@ -22,7 +22,7 @@
                 <div class="form-group">
                     <label for="body">Post Content*</label>
                     <textarea class="form-control" name="body" id="body" rows="10" placeholder="Describe your reason for getting in touch. Max 3500 characters ~ 500 words." maxlength="3500"
-                        required></textarea>
+                        required><%= typeof messageContent != 'undefined' ? messageContent : '' %></textarea>
                 </div>
                 <div class="text-muted"><p>* Required fields</p></div>
                 <div class="g-recaptcha" data-sitekey="6Lcm-18aAAAAAOgIU_KzFqEhcXfblJXxfY4l7EVA"></div>

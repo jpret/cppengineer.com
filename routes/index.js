@@ -54,35 +54,55 @@ router.post('/contact', async (req, res) => {
     try {
         if (req.body.name.length > 100) {
             res.render("contact", {
-                error_msg: "That name is too long..."
+                error_msg: "That name is too long...",
+                name: req.body.name,
+                email: req.body.email,
+                messageContent: req.body.body
             });
         } else if (req.body.email.length > 100) {
             res.render("contact", {
-                error: "That email is too long..."
+                error_msg: "That email is too long...",
+                name: req.body.name,
+                email: req.body.email,
+                messageContent: req.body.body
             });
         } else if (req.body.body.length > 3500) {
             res.render("contact", {
-                error: "That message is too long..."
+                error_msg: "That message is too long...",
+                name: req.body.name,
+                email: req.body.email,
+                messageContent: req.body.body
             });
         } else {
             // Get the user recaptcha
             const userRecaptcha = req.body['g-recaptcha-response'];
-            let challengeResult = await verifyReCapthca(userRecaptcha);
-
-            // Verify Recaptcha
-            if (challengeResult.success == false) {
-                res.render("contact", {
-                    error_msg: "Are you a robot?... please try the recaptcha again"
-                });
-            } else if (challengeResult.success == true) {
-                const contactMessage = await ContactMessage.create(req.body);
-                sendEmail(contactMessage);
-                req.flash('success_msg', "Contact Message received successfully! I'll get back to you as soon as possible.");
-                res.redirect('/');
+            if (userRecaptcha.length > 0) {
+                let challengeResult = await verifyReCapthca(userRecaptcha);
+                // Verify Recaptcha
+                if (challengeResult.success == false) {
+                    res.render("contact", {
+                        error_msg: "Are you a robot?... please try the reCAPTCHA again",
+                        name: req.body.name,
+                        email: req.body.email,
+                        messageContent: req.body.body
+                    });
+                } else if (challengeResult.success == true) {
+                    const contactMessage = await ContactMessage.create(req.body);
+                    sendEmail(contactMessage);
+                    req.flash('success_msg', "Contact Message received successfully! I'll get back to you as soon as possible.");
+                    res.redirect('/');
+                } else {
+                    console.log("challengeResult: 500");
+                    res.render('error/500', {
+                        redirect: "/"
+                    });
+                }
             } else {
-                console.log("challengeResult: 500");
-                res.render('error/500', {
-                    redirect: "/"
+                res.render("contact", {
+                    error_msg: "Please click in the reCAPTCHA box to prove that you are human!",
+                    name: req.body.name,
+                    email: req.body.email,
+                    messageContent: req.body.body
                 });
             }
         }
