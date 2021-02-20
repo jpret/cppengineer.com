@@ -7,6 +7,8 @@ function doVerifyReCapthca (userResponse) {
             response: userResponse
         });
 
+        console.log ("Sending: " + postData);
+
         var options = {
             hostname: 'www.google.com',
             port: 443,
