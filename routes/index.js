@@ -7,7 +7,7 @@ var moment = require('moment');
 // Imports - Middleware
 const { ensureAuthenticated, forwardAuthenticated } = require('../middleware/auth');
 const { sendEmail } = require('../middleware/email');
-const { doVerifyReCapthca, verifyReCapthca } = require('../middleware/recaptcha');
+const { verifyReCapthca } = require('../middleware/recaptcha');
 // Imports - Models
 const Post = require('./../models/Post');
 const ContactMessage = require('../models/ContactMessage');
@@ -92,7 +92,6 @@ router.post('/contact', async (req, res) => {
                     req.flash('success_msg', "Contact Message received successfully! I'll get back to you as soon as possible.");
                     res.redirect('/');
                 } else {
-                    console.log("challengeResult: 500");
                     res.render('error/500', {
                         redirect: "/"
                     });

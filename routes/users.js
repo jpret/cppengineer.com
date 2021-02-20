@@ -8,6 +8,7 @@ const passport = require('passport');
 // Import - Middleware
 const { forwardAuthenticated } = require('../middleware/auth');
 const { checkEnvironmentAccess } = require('../middleware/access');
+const { verifyReCapthca } = require('../middleware/recaptcha');
 
 // Import - Models
 const User = require('../models/User');
@@ -93,14 +94,45 @@ router.post('/register', checkEnvironmentAccess, (req, res) => {
 });
 
 // Login
-router.post('/login', (req, res, next) => {
-  passport.authenticate('local', {
-    successRedirect: '/dashboard',
-    failureRedirect: '/users/login',
-    failureFlash: true
-  })(req, res, next);
+router.post('/login', async (req, res, next) => {
+  if (process.env.NODE_ENV == "production") {
+    // Get the user recaptcha
+    const userRecaptcha = req.body['g-recaptcha-response'];
+    if (userRecaptcha.length > 0) {
+      let challengeResult = await verifyReCapthca(userRecaptcha);
+      // Verify Recaptcha
+      if (challengeResult.success == false) {
+        res.render('users/login', {
+          layout: 'layouts/lean',
+          error_msg: "Are you a robot?... please try the reCAPTCHA again"
+        })
+      } else if (challengeResult.success == true) {
+        passport.authenticate('local', {
+          successRedirect: '/dashboard',
+          failureRedirect: '/users/login',
+          failureFlash: true
+        })(req, res, next);
+      } else {
+        res.render('error/500', {
+          redirect: "/"
+        });
+      }
+    } else {
+      res.render('users/login', {
+        layout: 'layouts/lean',
+        error_msg: "Please click in the reCAPTCHA box to prove that you are human!"
+      })
+    }
+  } else if (process.env.NODE_ENV == "development") {
+    passport.authenticate('local', {
+      successRedirect: '/dashboard',
+      failureRedirect: '/users/login',
+      failureFlash: true
+    })(req, res, next);
+  };
+
 });
- 
+
 // Logout
 router.get('/logout', (req, res) => {
   req.logout();
