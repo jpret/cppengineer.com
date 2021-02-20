@@ -19,8 +19,8 @@ function doVerifyReCapthca (userResponse) {
         };
 
         var req = https.request(options, async (res) => {
-            //console.log('statusCode:', res.statusCode);
-            //console.log('headers:', res.headers);
+            console.log('statusCode:', res.statusCode);
+            console.log('headers:', res.headers);
             let responseBody = '';
 
             res.on('data', (chunk) => {
@@ -28,6 +28,7 @@ function doVerifyReCapthca (userResponse) {
             });
 
             res.on('end', () => {
+                console.log(JSON.parse(responseBody))
                 resolve(JSON.parse(responseBody));
             });
         });
