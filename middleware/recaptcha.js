@@ -2,10 +2,8 @@ const https = require('https');
 
 function doVerifyReCapthca (userResponse) {
     return new Promise((resolve, reject) => {
-        var postData = JSON.stringify({
-            secret: `${process.env.GOOGLE_RECAPTCHA_SECRET_KEY}`,
-            response: userResponse
-        });
+
+        var postData = "secret=" + `${process.env.GOOGLE_RECAPTCHA_SECRET_KEY}` + "&response=" + userResponse;
 
         console.log ("Sending: " + postData);
 
@@ -15,7 +13,7 @@ function doVerifyReCapthca (userResponse) {
             path: '/recaptcha/api/siteverify',
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
                 'Content-Length': postData.length
             }
         };
