@@ -31,7 +31,7 @@
                     <tbody>
                         <% posts.forEach(function(post){ %>
                         <tr>
-                            <td><a href="/posts/<%=post._id%>"><%=post.title%></a></td>
+                            <td><a href="/posts/<%=post.slug%>"><%=post.title%></a></td>
                             <td>
                                 <% if (post.tags.length > 0) { %>
                                 <% post.tags.forEach(function(tag){ %>

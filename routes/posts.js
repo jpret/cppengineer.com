@@ -170,7 +170,7 @@ router.get('/user/:userId', ensureAuthenticated, async (req, res) => {
 
 // @desc    Get Json Backup of Posts
 // @route   GET /posts/backup
-router.get('/backup', ensureAuthenticated, async (req, res) => {   
+router.get('/backup', ensureAuthenticated, async (req, res) => {
     try {
         const posts = await Post.find({
             user: req.user.id
@@ -190,11 +190,17 @@ router.get('/backup', ensureAuthenticated, async (req, res) => {
     }
 });
 
-// @desc    Get single post
+
+// @desc    Get single post by id / slug
 // @route   GET /posts/:id
 router.get('/:id', ensureAuthenticated, async (req, res) => {
     try {
-        let post = await Post.findById(req.params.id)
+        var query = {$or: [{slug: req.params.id}]};
+        // Check if it is a valid id, then only push id
+        if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+            query.$or.push({_id: req.params.id});
+        }
+        let post = await Post.findOne(query)
             .populate('user')
             .lean();
         if (!post) {
@@ -218,6 +224,7 @@ router.get('/:id', ensureAuthenticated, async (req, res) => {
         });
     }
 });
+
 
 // @desc    Show all public / member posts
 // @route   GET /posts

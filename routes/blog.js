@@ -37,7 +37,12 @@ router.get('/', async (req, res) => {
 // @route   GET /blog/:id
 router.get('/:id', async (req, res) => {
     try {
-        let post = await Post.findById(req.params.id)
+        var query = {$or: [{slug: req.params.id}]};
+        // Check if it is a valid id, then only push id
+        if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+            query.$or.push({_id: req.params.id});
+        }
+        let post = await Post.findOne(query)
             .populate('user')
             .lean();
         if (!post) {

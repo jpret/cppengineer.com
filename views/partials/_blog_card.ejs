@@ -9,6 +9,6 @@
             <% }); %>
             <% }; %></p>
         <p class="card-text"><%= helper.truncate(helper.stripTags(post.body),350) %></p>
-        <a href="/<%=  basePath %>/<%= post._id %>" class="btn btn-primary">Read more</a>
+        <a href="/<%=  basePath %>/<%= post.slug %>" class="btn btn-primary">Read more</a>
     </div>
 </div>

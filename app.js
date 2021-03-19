@@ -75,7 +75,7 @@ app.use('/', require('./routes/index'));
 app.use('/blog', require('./routes/blog'));
 app.use('/users', require('./routes/users'));
 app.use('/posts', require('./routes/posts'));
-app.use('/game', require('./routes/game'));
+// app.use('/game', require('./routes/game')); // We can add the game back later
 
 // Static folder files
 app.use(express.static('assets'));
