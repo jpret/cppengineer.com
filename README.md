@@ -16,7 +16,8 @@ If you want to know how to build a website with:
 - **[PassportJS](https://www.passportjs.org/)** for user access and session control;
 - blog website using **[NodeJS](https://nodejs.org/en/)** with **[MongoDB](https://www.mongodb.com/)**;
 - server side rendering using the **[EJS](https://ejs.co/)** templates;
-- nodejs integration with **Google Analytics**; and
+- nodejs integration with **Google Analytics**;
+- email integration with **[SendGrid](https://sendgrid.com/)**; and
 - rendering **[Markdown](https://en.wikipedia.org/wiki/Markdown)** with code markup to a webpage
 
 Then checkout this repository.
